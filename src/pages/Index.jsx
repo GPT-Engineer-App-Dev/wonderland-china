@@ -1,9 +1,10 @@
 import React from 'react';
-import { Landmark, Utensils, Camera, MapPin } from 'lucide-react';
+import { Landmark, Utensils, Camera, MapPin, Home, Info, Plane, Menu } from 'lucide-react';
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-gray-100">
+      <Navbar />
       {/* Header */}
       <header className="bg-red-600 text-white py-8">
         <div className="container mx-auto text-center">
@@ -110,5 +111,61 @@ const AttractionCard = ({ title, description, imageClass }) => (
     </div>
   </div>
 );
+
+const Navbar = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  return (
+    <nav className="bg-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <span className="text-xl font-semibold text-gray-800">China Explorer</span>
+          </div>
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-baseline space-x-4">
+              <NavItem icon={<Home className="w-4 h-4 mr-1" />} text="Home" />
+              <NavItem icon={<Info className="w-4 h-4 mr-1" />} text="About" />
+              <NavItem icon={<Landmark className="w-4 h-4 mr-1" />} text="Attractions" />
+              <NavItem icon={<Plane className="w-4 h-4 mr-1" />} text="Plan Your Trip" />
+            </div>
+          </div>
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {isOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <NavItem icon={<Home className="w-4 h-4 mr-1" />} text="Home" mobileView />
+            <NavItem icon={<Info className="w-4 h-4 mr-1" />} text="About" mobileView />
+            <NavItem icon={<Landmark className="w-4 h-4 mr-1" />} text="Attractions" mobileView />
+            <NavItem icon={<Plane className="w-4 h-4 mr-1" />} text="Plan Your Trip" mobileView />
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+const NavItem = ({ icon, text, mobileView = false }) => {
+  const baseClasses = "flex items-center px-3 py-2 rounded-md text-sm font-medium";
+  const desktopClasses = "text-gray-600 hover:bg-red-500 hover:text-white";
+  const mobileClasses = "text-gray-300 hover:bg-gray-700 hover:text-white block";
+
+  return (
+    <a href="#" className={`${baseClasses} ${mobileView ? mobileClasses : desktopClasses}`}>
+      {icon}
+      {text}
+    </a>
+  );
+};
 
 export default Index;
